@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Roblox Scripter &amp; Builder with 7+ years of experience.">
   <meta name="theme-color" content="#050505">
-  <title>Matias' Scripting Portfolio</title>
+  <title>matiasgrief — Scripting Portfolio</title>
   <style>
 :root {
   --background: #050505;
@@ -181,6 +181,8 @@ footer {
   border: 0;
   background: transparent;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .expand-button:focus-visible,
@@ -220,6 +222,8 @@ a:focus-visible {
   background: #000;
   object-fit: contain;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .player-controls {
@@ -234,6 +238,7 @@ a:focus-visible {
   align-items: center;
   gap: 12px;
   background: linear-gradient(transparent, rgb(0 0 0 / 92%));
+  touch-action: manipulation;
 }
 
 .player-control {
@@ -245,6 +250,8 @@ a:focus-visible {
   font-size: 11px;
   font-weight: 700;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .player-control:hover {
@@ -297,7 +304,8 @@ a:focus-visible {
   font-variant-numeric: tabular-nums;
 }
 
-.player-frame:fullscreen {
+.player-frame:fullscreen,
+.player-frame:-webkit-full-screen {
   width: 100vw;
   height: 100vh;
   aspect-ratio: auto;
@@ -305,13 +313,15 @@ a:focus-visible {
   background: #000;
 }
 
-.player-frame:fullscreen video {
+.player-frame:fullscreen video,
+.player-frame:-webkit-full-screen video {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-.player-frame:fullscreen .player-controls {
+.player-frame:fullscreen .player-controls,
+.player-frame:-webkit-full-screen .player-controls {
   min-height: 84px;
   padding: 30px 32px 22px;
 }
@@ -461,8 +471,38 @@ footer {
   }
 
   .player-controls {
-    gap: 8px;
-    padding-inline: 10px;
+    min-height: 62px;
+    gap: 4px;
+    padding: 10px 8px 6px;
+  }
+
+  .player-control {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+  }
+
+  .expand-button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px 0 10px 12px;
+  }
+
+  .timeline {
+    height: 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 3px;
+  }
+
+  .timeline::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+  }
+
+  .timeline::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
   }
 
   .time-readout,
@@ -645,8 +685,16 @@ players.forEach((player) => {
   const toggleFullscreen = async () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
-    } else {
-      await frame.requestFullscreen();
+      return;
+    }
+    if (frame.requestFullscreen) {
+      try {
+        await frame.requestFullscreen();
+        return;
+      } catch {}
+    }
+    if (video.webkitEnterFullscreen) {
+      video.webkitEnterFullscreen();
     }
   };
 
@@ -684,6 +732,14 @@ players.forEach((player) => {
     const active = document.fullscreenElement === frame;
     fullscreenButton.textContent = active ? '↙' : '↗';
     fullscreenButton.setAttribute('aria-label', active ? 'Exit fullscreen' : 'Enter fullscreen');
+  });
+  video.addEventListener('webkitbeginfullscreen', () => {
+    fullscreenButton.textContent = '↙';
+    fullscreenButton.setAttribute('aria-label', 'Exit fullscreen');
+  });
+  video.addEventListener('webkitendfullscreen', () => {
+    fullscreenButton.textContent = '↗';
+    fullscreenButton.setAttribute('aria-label', 'Enter fullscreen');
   });
 });
 
