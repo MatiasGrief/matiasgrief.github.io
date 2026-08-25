@@ -156,13 +156,20 @@ footer {
 .project-title {
   min-width: 0;
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 14px;
 }
 
 .project-title span {
+  margin-top: 4px;
   color: var(--muted);
   font-size: 10px;
+}
+
+.project-copy {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
 }
 
 .project h2 {
@@ -173,6 +180,14 @@ footer {
   letter-spacing: -0.02em;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.project-details {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
 }
 
 .expand-button {
@@ -552,7 +567,9 @@ footer {
           <div class="project-header">
             <div class="project-title">
               <span>01</span>
-              <h2>Drawing System</h2>
+              <div class="project-copy">
+                <h2>Drawing System</h2>
+              </div>
             </div>
             <button type="button" class="expand-button" data-expand>Expand ↗</button>
           </div>
@@ -580,7 +597,9 @@ footer {
           <div class="project-header">
             <div class="project-title">
               <span>02</span>
-              <h2>Boxing System &amp; NPC Boxer</h2>
+              <div class="project-copy">
+                <h2>Boxing System &amp; NPC Boxer</h2>
+              </div>
             </div>
             <button type="button" class="expand-button" data-expand>Expand ↗</button>
           </div>
@@ -589,6 +608,37 @@ footer {
               <div class="player-frame" data-player-frame>
                 <video playsinline preload="metadata" aria-label="Boxing System and NPC Boxer showcase">
                   <source src="boxing-system.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+                <div class="player-controls">
+                  <button type="button" class="player-control play-control" data-play aria-label="Play video">▶</button>
+                  <input class="timeline" data-timeline type="range" min="0" max="0" step="0.01" value="0" aria-label="Video progress">
+                  <span class="time-readout" data-time>0:00 / 0:00</span>
+                  <button type="button" class="player-control mute-control" data-mute aria-label="Mute video">VOL</button>
+                  <input class="volume-control" data-volume type="range" min="0" max="1" step="0.05" value="1" aria-label="Volume">
+                  <button type="button" class="player-control fullscreen-control" data-expand data-fullscreen aria-label="Enter fullscreen">↗</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project" data-player>
+          <div class="project-header">
+            <div class="project-title">
+              <span>03</span>
+              <div class="project-copy">
+                <h2>Pet Simulator Gacha &amp; Pet System</h2>
+                <p class="project-details">Pity · Rarity · Walking pets · DataStore</p>
+              </div>
+            </div>
+            <button type="button" class="expand-button" data-expand>Expand ↗</button>
+          </div>
+          <div class="player-stage">
+            <div class="player-window">
+              <div class="player-frame" data-player-frame>
+                <video playsinline preload="metadata" aria-label="Pet Simulator gacha and pet system showcase">
+                  <source src="pet-sim-system.mp4" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
                 <div class="player-controls">
